@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "ToDoApp",
+    "slug": "ToDoApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "package": "com.abhi999k.ToDoApp"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "68b69b28-4fb6-4b24-bca5-222920efc991"
+      }
+    }
+  }
+}
