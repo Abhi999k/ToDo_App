@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 import { getAuth, sendEmailVerification, reload } from 'firebase/auth';
 
-export default function EmailVerificationScreen({ navigation }: any) {
+export default function EmailVerificationScreen() {
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -15,7 +15,6 @@ export default function EmailVerificationScreen({ navigation }: any) {
         await sendEmailVerification(user);
         Alert.alert('Email Sent', 'A verification email has been sent.');
 
-        // Start cooldown timer (e.g., 60s)
         setCooldown(60);
         const interval = setInterval(() => {
           setCooldown(prev => {
@@ -31,22 +30,6 @@ export default function EmailVerificationScreen({ navigation }: any) {
       }
     }
   };
-
-  const checkVerification = async () => {
-    if (user) {
-      setLoading(true);
-      await reload(user);
-      setLoading(false);
-
-      if (user.emailVerified) {
-        Alert.alert('Success', 'Email verified successfully!');
-        navigation.replace('LoginScreen');
-      } else {
-        Alert.alert('Not Verified', 'Please verify your email first.');
-      }
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>📧 Verify your Email</Text>
@@ -60,21 +43,12 @@ export default function EmailVerificationScreen({ navigation }: any) {
         color="#1976D2"
         disabled={cooldown > 0}
       />
-
       <View style={{ marginVertical: 12 }} />
-      
-      <Button
-        title={loading ? 'Checking...' : 'I have verified'}
-        onPress={checkVerification}
-        color="#1976D2"
-      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#fff' },
   heading: { fontSize: 22, fontWeight: 'bold', marginBottom: 12, color: '#1976D2' },
   text: { textAlign: 'center', marginBottom: 20, fontSize: 14, color: '#333' },
 });
-

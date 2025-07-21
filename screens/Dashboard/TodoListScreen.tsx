@@ -32,7 +32,6 @@ export default function ToDoScreen() {
 
   const uid = auth.currentUser?.uid;
 
-  // Enable LayoutAnimation on Android
   useEffect(() => {
     if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);

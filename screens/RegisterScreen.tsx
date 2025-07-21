@@ -37,13 +37,10 @@ export default function RegisterScreen({ navigation }: any) {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(userCred.user, { displayName: name });
     await auth.currentUser?.reload();
-    navigation.replace('EmailVerificationScreen');
   } catch (error: any) {
     Alert.alert("Registration failed", error.message);
   }
 };
-
-
 
   return (
     <View style={styles.container}>

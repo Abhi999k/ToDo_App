@@ -1,4 +1,3 @@
-// screens/LoginScreen.tsx
 import React, { useState } from 'react';
 import {
   View,
@@ -17,21 +16,30 @@ export default function LoginScreen({ navigation }: any) {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Validation Error', 'Please enter both email and password.');
+      Alert.alert('Missing Fields', 'Please enter both email and password.');
       return;
     }
 
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCred.user;
 
-      if (!userCred.user.emailVerified) {
-        Alert.alert('Email Not Verified', 'Please verify your email before logging in.');
+      if (!user.emailVerified) {
+        Alert.alert(
+          'Email Not Verified',
+          'Your email is not verified. Please check your inbox and verify it before logging in.'
+        );
         await signOut(auth);
-      } 
-      else {
+      } else {
+        const name = user.displayName || user.email || 'User';
+        Alert.alert('Login Successful', `Welcome back, ${name}!`);
       }
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message);
+      switch (error.code) {
+        default:
+          Alert.alert('Login Failed', error.message);
+          break;
+      }
     }
   };
 
